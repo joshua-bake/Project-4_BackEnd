@@ -1,8 +1,9 @@
 from sqlalchemy.ext.hybrid import hybrid_property
 from app import db, bcrypt
+from models.base import BaseModel
 
 
-class UserModel(db.Model):
+class UserModel(db.Model, BaseModel):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -10,9 +11,6 @@ class UserModel(db.Model):
     username = db.Column(db.Text, nullable=False, unique=True)
     email = db.Column(db.Text, nullable=False, unique=True)
     password_hash = db.Column(db.Text, nullable=True)
-
-    decks = db.relationship("DeckModel", backref="creator")
-    collaborators = db.relationship("CollaboratorModel", backref="users")
 
     @hybrid_property
     def password(self):
