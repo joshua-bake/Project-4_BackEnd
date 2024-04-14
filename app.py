@@ -21,8 +21,7 @@ marsh = Marshmallow(app)
 
 bcrypt = Bcrypt(app)
 
-# from controllers import users, decks
+from controllers import users
 
-# app.register_blueprint(users.router, url_prefix="/api")
+app.register_blueprint(users.router, url_prefix="/api")
 # app.register_blueprint(decks.router, url_prefix="/api")
-
