@@ -15,5 +15,5 @@ class DeckModel(db.Model, BaseModel):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     # ? Relationships
-    cards = db.relationship("CardModel", back_populates="deck")
+    card = db.relationship("CardModel", back_populates="deck")
     user = db.relationship("UserModel", backref="decks")
