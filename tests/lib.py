@@ -38,7 +38,7 @@ def setup():
             #     ),
             # ]
 
-            user_list.save()
+            # user_list.save()
             # db.session.add_all(shows_list)
             # db.session.commit()
 
