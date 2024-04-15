@@ -14,7 +14,6 @@ class CardModel(db.Model, BaseModel):
     deck_id = db.Column(db.Integer, db.ForeignKey("decks.id"), nullable=False)
 
     # ? Relationships
-    deck = db.relationship("DeckModel", back_populates="cards")
 
 
 # ? Check Nick's video on relationship.

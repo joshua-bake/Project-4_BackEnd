@@ -3,6 +3,7 @@ from marshmallow.exceptions import ValidationError
 from flask import Blueprint, request, g
 from models.card import CardModel
 from app import db
+from middleware.secure_route import secure_route
 from serializers.card import CardSerializer
 
 
@@ -19,7 +20,8 @@ def get_cards():
 
 
 @router.route("/cards", methods=["POST"])
-def post_card():
+@secure_route
+def create_card():
 
     card_dictionary = request.json
 
@@ -27,7 +29,7 @@ def post_card():
         card_model = card_serializer.load(card_dictionary)
         card_model.user_id = g.current_user.id
 
-        card_dictionary.save()
+        card_model.save()
 
         # ? Need to append the card to the appropriate Deck.
 

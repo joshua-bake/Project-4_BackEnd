@@ -10,10 +10,12 @@ class DeckModel(db.Model, BaseModel):
 
     title = db.Column(db.Text, nullable=False, unique=True)
     description = db.Column(db.Text, nullable=False, unique=False)
+    category = db.Column(db.Text, nullable=False, unique=False)
 
     # ? Foreign Keys
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     # ? Relationships
-    card = db.relationship("CardModel", back_populates="deck")
+
     user = db.relationship("UserModel", backref="decks")
+    
