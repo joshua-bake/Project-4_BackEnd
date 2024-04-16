@@ -28,12 +28,19 @@ def create_card():
     try:
         card_model = card_serializer.load(card_dictionary)
         card_model.user_id = g.current_user.id
+        deck_id = request.json["deck_id"]
 
         card_model.save()
 
-        # ? Need to append the card to the appropriate Deck.
+        deck = db.session.query(CardModel).get(deck_id)
 
+        if deck:
+            deck.card.append(card_model)
+            db.session.commit()
+
+        print("Card", card_model, "added")
         return card_serializer.jsonify(card_model)
+
     except ValidationError as e:
         return {
             "errors": e.messages,
@@ -91,3 +98,7 @@ def remove_show(card_id):
     card_to_delete.remove()
 
     return card_serializer.jsonify(card_to_delete)
+
+
+# ! Add Language and Medical Card paths do we need to add path.
+# ? The two models could be used as sample data and create real ones on front end.

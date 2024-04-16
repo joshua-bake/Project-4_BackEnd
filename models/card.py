@@ -9,9 +9,9 @@ class CardModel(db.Model, BaseModel):
 
     front_content = db.Column(db.Text, nullable=False, unique=False)
     back_content = db.Column(db.Text, nullable=False, unique=False)
+    deck_id = db.Column(db.Text, nullable=False, unique=False)
 
     # ? Foreign Keys
-    deck_id = db.Column(db.Integer, db.ForeignKey("decks.id"), nullable=False)
 
     # ? Relationships
 

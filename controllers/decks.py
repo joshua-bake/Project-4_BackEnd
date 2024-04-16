@@ -21,15 +21,11 @@ def get_decks():
 
 @router.route("/decks/<int:deck_id>", methods=["GET"])
 def get_single_deck(deck_id):
-    # ! Get a single tea using our db and sqlalchemy
     deck = db.session.query(DeckModel).get(deck_id)
 
-    # ! If there's no tea..
     if not deck:
-        # ! Send back a response with a message and status code (its a tuple)
         return {"message": "No deck found"}, HTTPStatus.NOT_FOUND
 
-    # ! Serialize the single tea object. This time now need for many=True
     return deck_serializer.jsonify(deck)
 
 
@@ -43,8 +39,7 @@ def create_decks():
         deck_model = deck_serializer.load(deck_dictionary)
         deck_model.user_id = g.current_user.id
 
-        db.session.add(deck_model)
-        db.session.commit()
+        deck_model.save()
 
         print("Deck", deck_model, "added")
         return deck_serializer.jsonify(deck_model)
@@ -61,7 +56,7 @@ def create_decks():
 
 @router.route("/decks/<int:deck_id>", methods=["PUT"])
 @secure_route
-def update_tea(deck_id):
+def update_deck(deck_id):
 
     try:
 
@@ -98,7 +93,7 @@ def update_tea(deck_id):
 
 @router.route("/decks/<int:deck_id>", methods=["DELETE"])
 @secure_route
-def remove_tea(deck_id):
+def remove_deck(deck_id):
 
     deck_to_delete = db.session.query(DeckModel).get(deck_id)
 
@@ -110,8 +105,7 @@ def remove_tea(deck_id):
             "message": "This is not your deck! Go make your own deck."
         }, HTTPStatus.UNAUTHORIZED
 
-    db.session.delete(deck_to_delete)
-    db.session.commit()
+    deck_to_delete.remove()
 
     print("Deck deleted ...", deck_to_delete)
     return {"message": "Deck deleted."}

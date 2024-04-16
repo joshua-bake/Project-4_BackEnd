@@ -91,8 +91,7 @@ def remove_user(user_id):
         if not user_to_delete:
             return {"message": "User not found"}, HTTPStatus.NOT_FOUND
 
-        db.session.delete(user_to_delete)
-        db.session.commit()
+        user_to_delete.remove()
 
         return user_serializer.jsonify(user_to_delete)
     except ValidationError as e:
