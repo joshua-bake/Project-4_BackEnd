@@ -16,25 +16,24 @@ router = Blueprint("users", __name__)
 @router.route("/signup", methods=["POST"])
 def signup():
 
+    user_dictionary = request.json
+
+    if user_dictionary["password"] != user_dictionary["password_confirmation"]:
+        return {
+            "errors": "Passwords do not match",
+            "messsages": "Something went wrong",
+        }, HTTPStatus.UNPROCESSABLE_ENTITY
+
+    del user_dictionary["password_confirmation"]
+
     try:
-        user_dictionary = request.json
-
-        user_model = user_serializer.load(user_dictionary)
-
-        user_model.save()
-
-        print("user model", user_model.password)
-
-        return user_serializer.jsonify(user_model)
+        user = user_serializer.load(user_dictionary)
+        user.save()
 
     except ValidationError as e:
-        return {
-            "errors": e.messages,
-            "message": "Something went wrong",
-        }, HTTPStatus.UNPROCESSABLE_ENTITY
-    except Exception as e:
-        print(e)
-        return {"message": "Something went wrong"}, HTTPStatus.INTERNAL_SERVER_ERROR
+        return {"errors": e.messages, "messsages": "Something went wrong"}
+
+    return user_serializer.jsonify(user)
 
 
 @router.route("/login", methods=["POST"])
