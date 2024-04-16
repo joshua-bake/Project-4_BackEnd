@@ -32,7 +32,7 @@ with app.app_context():
         japanese_deck = DeckModel(
             title="Japanese JLPT N5",
             description="N5 Test Study Prep",
-            category='Language',
+            category="Language",
             user_id=user_id,
         )
         japanese_deck.save()
@@ -46,11 +46,9 @@ with app.app_context():
         )
         medical_deck.save()
 
-        deck_id = josh.id
         sample = CardModel(
             front_content="Front of Card Contents",
             back_content="Back of Card Contents",
-            deck_id=deck_id,
         )
         sample.save()
 
