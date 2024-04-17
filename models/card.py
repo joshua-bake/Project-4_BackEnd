@@ -7,8 +7,8 @@ class CardModel(db.Model, BaseModel):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    front_content = db.Column(db.Text, nullable=False, unique=False)
-    back_content = db.Column(db.Text, nullable=False, unique=False)
+    question = db.Column(db.Text, nullable=False, unique=False)
+    answer = db.Column(db.Text, nullable=False, unique=False)
     deck_id = db.Column(db.Text, nullable=False, unique=False)
 
     # ? Foreign Keys
