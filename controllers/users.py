@@ -18,13 +18,13 @@ def signup():
 
     user_dictionary = request.json
 
-    if user_dictionary["password"] != user_dictionary["password_confirmation"]:
+    if user_dictionary["password"] != user_dictionary["passwordConfirmation"]:
         return {
             "errors": "Passwords do not match",
             "messsages": "Something went wrong",
         }, HTTPStatus.UNPROCESSABLE_ENTITY
 
-    del user_dictionary["password_confirmation"]
+    del user_dictionary["passwordConfirmation"]
 
     try:
         user = user_serializer.load(user_dictionary)
