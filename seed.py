@@ -47,8 +47,8 @@ with app.app_context():
         medical_deck.save()
 
         sample = CardModel(
-            front_content="Front of Card Contents",
-            back_content="Back of Card Contents",
+            question="Front of Card Contents",
+            answer="Back of Card Contents",
         )
         sample.save()
 
