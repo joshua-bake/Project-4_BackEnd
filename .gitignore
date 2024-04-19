@@ -1,0 +1,5 @@
+
+.env
+.pylintrc
+pytest.ini
+# Editor directories and files
