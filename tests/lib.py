@@ -17,31 +17,6 @@ def setup():
                 username="Josh", email="josh@admin.com", password="joshua123"
             )
 
-            # shows_list = [
-            #     ShowModel(
-            #         name="Master's Daughter",
-            #         region="Japan",
-            #         genre="Thriller & Suspense",
-            #         sub_genre="Crime & Mystery",
-            #         platform="Viki",
-            #         rating=7.3,
-            #         user_id=1,
-            #     ),
-            #     ShowModel(
-            #         name="Never Let Me Go",
-            #         region="Thailand",
-            #         genre="BL",
-            #         sub_genre="Action",
-            #         platform="Viki",
-            #         rating=8.4,
-            #         user_id=1,
-            #     ),
-            # ]
-
-            # user_list.save()
-            # db.session.add_all(shows_list)
-            # db.session.commit()
-
             yield
 
             db.drop_all()

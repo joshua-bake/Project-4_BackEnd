@@ -27,3 +27,5 @@ dist-ssr
 .env
 .pylintrc
 pytest.ini
+pylintrc
+pytest
