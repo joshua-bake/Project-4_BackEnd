@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+Pipfile.lock
+Pipfile
 
 # Editor directories and files
 .vscode/*
@@ -25,5 +27,7 @@ dist-ssr
 .env
 .pylintrc
 pytest.ini
-pylintrc
-pytest
+.pytest_cache
+
+
+
