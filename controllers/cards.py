@@ -99,6 +99,3 @@ def remove_show(card_id):
 
     return card_serializer.jsonify(card_to_delete)
 
-
-# ! Add Language and Medical Card paths do we need to add path.
-# ? The two models could be used as sample data and create real ones on front end.
