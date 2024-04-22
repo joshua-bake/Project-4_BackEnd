@@ -109,3 +109,13 @@ def remove_show(card_id):
     card_to_delete.remove()
 
     return card_serializer.jsonify(card_to_delete)
+
+
+@router.route("/cards/deck/<int:deck_id>", methods=["GET"])
+def get_cards_by_deck(deck_id):
+
+    cards = db.session.query(CardModel).filter_by(deck_id=deck_id).all()
+
+    if not cards:
+        return {"message": "No cards found for this deck."}, HTTPStatus.NOT_FOUND
+    return card_serializer.jsonify(cards, many=True)
