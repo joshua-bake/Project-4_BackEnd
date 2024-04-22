@@ -1,6 +1,7 @@
 from app import db
 from models.user import UserModel
 from models.base import BaseModel
+from models.card import CardModel
 
 
 class DeckModel(db.Model, BaseModel):
@@ -16,6 +17,5 @@ class DeckModel(db.Model, BaseModel):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     # ? Relationships
-
+    cards = db.relationship("CardModel", backref="deck", lazy="dynamic")
     user = db.relationship("UserModel", backref="decks")
-    

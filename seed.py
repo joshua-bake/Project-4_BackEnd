@@ -49,7 +49,7 @@ with app.app_context():
         sample = CardModel(
             question="Front of Card Contents",
             answer="Back of Card Contents",
-            deck_id="sample_id"
+            deck_id="1"
         )
         sample.save()
 

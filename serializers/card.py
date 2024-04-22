@@ -11,3 +11,6 @@ class CardSerializer(marsh.SQLAlchemyAutoSchema):
     class Meta:
         model = CardModel
         load_instance = True
+        exclude = ('deck',)
+        
+    deck_id = fields.Integer()

@@ -2,6 +2,7 @@ from http import HTTPStatus
 from marshmallow.exceptions import ValidationError
 from flask import Blueprint, request, g
 from models.card import CardModel
+from models.deck import DeckModel
 from app import db
 from middleware.secure_route import secure_route
 from serializers.card import CardSerializer
@@ -19,6 +20,16 @@ def get_cards():
     return card_serializer.jsonify(cards, many=True)
 
 
+@router.route("/cards/<int:card_id>", methods=["GET"])
+def get_single_card(card_id):
+    card = db.session.query(CardModel).get(card_id)
+
+    if not card:
+        return {"message": "No card found"}, HTTPStatus.NOT_FOUND
+
+    return card_serializer.jsonify(card)
+
+
 @router.route("/cards", methods=["POST"])
 @secure_route
 def create_card():
@@ -32,10 +43,10 @@ def create_card():
 
         card_model.save()
 
-        deck = db.session.query(CardModel).get(deck_id)
+        deck = db.session.query(DeckModel).get(deck_id)
 
         if deck:
-            deck.card.append(card_model)
+            deck.cards.append(card_model)
             db.session.commit()
 
         print("Card", card_model, "added")
@@ -98,4 +109,3 @@ def remove_show(card_id):
     card_to_delete.remove()
 
     return card_serializer.jsonify(card_to_delete)
-

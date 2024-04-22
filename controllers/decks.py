@@ -2,12 +2,15 @@ from http import HTTPStatus
 from marshmallow.exceptions import ValidationError
 from flask import Blueprint, request, g
 from models.deck import DeckModel
+from models.card import CardModel
 from app import db
 from middleware.secure_route import secure_route
 from serializers.deck import DeckSerializer
+from serializers.card import CardSerializer
 
 
 deck_serializer = DeckSerializer()
+card_serializer = CardSerializer()
 
 router = Blueprint("decks", __name__)
 
@@ -16,7 +19,16 @@ router = Blueprint("decks", __name__)
 def get_decks():
 
     decks = db.session.query(DeckModel).all()
-    return deck_serializer.jsonify(decks, many=True)
+    serialized_decks = deck_serializer.dump(decks, many=True)
+
+    # Iterate over each deck and fetch the associated cards
+    for deck_data in serialized_decks:
+        deck_id = deck_data["id"]
+        cards = db.session.query(CardModel).filter_by(deck_id=deck_id).all()
+        serialized_cards = [card_serializer.dump(card) for card in cards]
+        deck_data["cards"] = serialized_cards
+
+    return serialized_decks
 
 
 @router.route("/decks/<int:deck_id>", methods=["GET"])
