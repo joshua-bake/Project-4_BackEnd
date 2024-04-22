@@ -12,10 +12,5 @@ class CardModel(db.Model, BaseModel):
 
     # ? Foreign Keys
     deck_id = db.Column(db.Integer, db.ForeignKey("decks.id"), nullable=False)
+
     # ? Relationships
-
-
-# ? Check Nick's video on relationship.
-# ? May need to change Card Model to Language model with its unique fields.
-# ? Do we need a model for each Type of Flashcard Deck e.g. Language and Medical
-# ? Or can we use Card Model as a template for all other deck flashcards.
