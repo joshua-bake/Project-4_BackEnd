@@ -27,16 +27,12 @@ def get_decks():
         cards = db.session.query(CardModel).filter_by(deck_id=deck_id).all()
         serialized_cards = [card_serializer.dump(card) for card in cards]
         deck_data["cards"] = serialized_cards
-
     return serialized_decks
 
 
 @router.route("/decks/<int:deck_id>", methods=["GET"])
 def get_single_deck(deck_id):
     deck = db.session.query(DeckModel).get(deck_id)
-
-    if not deck:
-        return {"message": "No deck found"}, HTTPStatus.NOT_FOUND
 
     return deck_serializer.jsonify(deck)
 
