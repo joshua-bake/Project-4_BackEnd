@@ -28,6 +28,8 @@ Pipfile
 .pylintrc
 pytest.ini
 .pytest_cache
+seed.py
+
 
 
 
