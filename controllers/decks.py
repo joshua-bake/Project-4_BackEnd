@@ -102,18 +102,21 @@ def update_deck(deck_id):
 @router.route("/decks/<int:deck_id>", methods=["DELETE"])
 @secure_route
 def remove_deck(deck_id):
+    try:
+        deck_to_delete = db.session.query(DeckModel).get(deck_id)
 
-    deck_to_delete = db.session.query(DeckModel).get(deck_id)
+        if not deck_to_delete:
+            return {"message": "No deck found"}, HTTPStatus.NOT_FOUND
 
-    if not deck_to_delete:
-        return {"message": "No deck found"}, HTTPStatus.NOT_FOUND
-
-    if deck_to_delete.user_id != g.current_user.id:
-        return {
+        if deck_to_delete.user_id != g.current_user.id:
+            return {
             "message": "This is not your deck! Go make your own deck."
         }, HTTPStatus.UNAUTHORIZED
 
-    deck_to_delete.remove()
+        deck_to_delete.remove()
 
-    print("Deck deleted ...", deck_to_delete)
-    return {"message": "Deck deleted."}
+        print("Deck deleted ...", deck_to_delete)
+        return {"message": "Deck deleted."}
+    except Exception as e:
+        print(e)
+        return {"message": "Something went wrong"}, HTTPStatus.INTERNAL_SERVER_ERROR
