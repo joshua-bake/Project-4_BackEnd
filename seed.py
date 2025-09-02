@@ -46,11 +46,17 @@ with app.app_context():
         )
         medical_deck.save()
 
+        sample_deck = DeckModel(
+            title="Sample Deck",
+            description="Uncategorized sample cards",
+            category="Sample",
+            user_id=josh.id)
+        sample_deck.save()
+
         sample = CardModel(
             question="Front of Card Contents",
             answer="Back of Card Contents",
-            deck_id="1",
-        )
+            deck_id=sample_deck.id,)
         sample.save()
 
         user_id = josh.id
